@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul class="todo-list"></ul>
+</body>
+<script>
+    const todoListEle = document.querySelector(".todo-list")
+    // render todos to html 
+    const renderTodos = todos => {
+        let todoHtml = ""
+        todos.forEach(val => { 
+            todoHtml += `<li>${val.content}</li>`
+        })
+        todoListEle.innerHTML = todoHtml
+    }
+    // get todos 
+    const getTodos = async () => {
+        const res = await fetch("http://localhost:3000/todo")
+        const resJson = await res.json()
+
+        const { success , data } = resJson
+        if (success) { 
+            renderTodos(data)
+        } else { 
+            todoListEle.innerHTML = "Something wrong..."
+        }
+    }
+
+    getTodos()
+</script>
+</html>

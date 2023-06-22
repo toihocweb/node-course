@@ -2,17 +2,16 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { env } = require("../config/env");
+const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
+const { ErrorResponse } = require("../response/ErrorResponse");
 
-const register = async (req, res) => {
+const register = asyncMiddleware(async (req, res, next) => {
   const { username, email, password } = req.body;
 
   // check email
   const isExistedEmail = await User.findOne({ email });
   if (isExistedEmail) {
-    return res.status(409).json({
-      success: false,
-      message: "Email is already existed",
-    });
+    throw new ErrorResponse(409, "Email is already existed");
   }
 
   const salt = bcrypt.genSaltSync(12);
@@ -26,47 +25,46 @@ const register = async (req, res) => {
 
   await newUser.save();
 
+  // sequelize...
+
   res.status(201).json({
     success: true,
   });
-};
+});
 
-const login = async (req, res) => {
-    const { email, password } = req.body
+const login = asyncMiddleware(async (req, res, next) => {
+  const { email, password } = req.body;
 
-    const user = await User.findOne({ email })
+  const user = await User.findOne({ email });
 
-    if (!user) { 
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized"
-      })
-    }
+  if (!user) {
+    throw new ErrorResponse(401, "Unauthorized");
+  }
 
-    const isMatch = bcrypt.compareSync(password, user.password)
+  const isMatch = bcrypt.compareSync(password, user.password);
 
-    if (!isMatch) { 
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized"
-      })
-    }
+  if (!isMatch) {
+    throw new ErrorResponse(401, "Unauthorized");
+  }
 
-    // tao jsonwebtoken
-    const token = jwt.sign({
+  // tao jsonwebtoken
+  const token = jwt.sign(
+    {
       username: user.username,
       id: user._id,
       email: user.email,
-    }, env.SECRET_KEY, { 
-      expiresIn: env.EXPIRED_IN
-    })
+    },
+    env.SECRET_KEY,
+    {
+      expiresIn: env.EXPIRED_IN,
+    }
+  );
 
-    res.json({
-      success: true,
-      token
-    })
-
-};
+  res.json({
+    success: true,
+    token,
+  });
+});
 
 module.exports = {
   register,

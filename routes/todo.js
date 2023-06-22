@@ -14,6 +14,12 @@ router.post(
 );
 
 router.get("/", todoController.getTodos);
+router.get(
+  "/:id",
+  validator(todoSchema.idSchema, "params"),
+  jwtAuth,
+  todoController.getTodoById
+);
 
 // dang nhap
 router.delete(

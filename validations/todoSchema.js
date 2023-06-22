@@ -3,8 +3,8 @@ const Joi = require("./joi")
 const contentSchema = Joi.string().min(5).required()
 
 const createTodoSchema = Joi.object({
-    content: contentSchema
-})
+  content: contentSchema,
+});
 
 const idSchema = Joi.object({
     id: Joi.objectId()
