@@ -1,15 +1,21 @@
-const User = require("../models/User");
+// const User = require("../models/mongo/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { env } = require("../config/env");
 const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
 const { ErrorResponse } = require("../response/ErrorResponse");
+const User = require("../models/mysql/User");
+const Address = require("../models/mysql/Address");
 
 const register = asyncMiddleware(async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, phone } = req.body;
 
   // check email
-  const isExistedEmail = await User.findOne({ email });
+  const isExistedEmail = await User.findOne({
+    where: {
+      email,
+    },
+  });
   if (isExistedEmail) {
     throw new ErrorResponse(409, "Email is already existed");
   }
@@ -17,25 +23,45 @@ const register = asyncMiddleware(async (req, res, next) => {
   const salt = bcrypt.genSaltSync(12);
   const hashedPassword = bcrypt.hashSync(password, salt);
 
-  const newUser = new User({
+  const user = await User.create({
     username,
     email,
+    phone,
     password: hashedPassword,
   });
 
-  await newUser.save();
-
-  // sequelize...
+  // create address
+  // await Address.create({
+  //   city: "",
+  //   address: "",
+  //   province: "",
+  //   zip: "",
+  //   UserId: user.id,
+  // });
 
   res.status(201).json({
     success: true,
   });
 });
 
+const getusers = asyncMiddleware(async (req, res, next) => {
+  const users = await User.findAll({
+    include: Address,
+  });
+
+  res.json({
+    success: true,
+    data: users,
+  });
+});
+
 const login = asyncMiddleware(async (req, res, next) => {
   const { email, password } = req.body;
-
-  const user = await User.findOne({ email });
+  const user = await User.findOne({
+    where: {
+      email,
+    },
+  });
 
   if (!user) {
     throw new ErrorResponse(401, "Unauthorized");
@@ -50,9 +76,7 @@ const login = asyncMiddleware(async (req, res, next) => {
   // tao jsonwebtoken
   const token = jwt.sign(
     {
-      username: user.username,
-      id: user._id,
-      email: user.email,
+      id: user.id,
     },
     env.SECRET_KEY,
     {

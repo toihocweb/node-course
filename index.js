@@ -5,11 +5,15 @@ const cors = require("cors");
 const app = express();
 // logger
 const morgan = require("morgan");
-const connectDB = require("./database/connect");
-const todoRouter = require("./routes/todo");
+// const connectDB = require("./database/mongo/connect");
 const authRouter = require("./routes/auth");
+const addressRouter = require("./routes/address");
 const { env } = require("./config/env");
 const { errorMiddleware } = require("./middlewares/errorMiddleware");
+const sequelize = require("./database/mysql/connect");
+
+require("./models/mysql/relationship")
+
 
 const PORT = env.PORT;
 
@@ -18,14 +22,15 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
-// connect DB
-connectDB().then(() => {
+// connect Mysql DB
+sequelize.sync({ force: true }).then(() => {
   console.log("Connected Database Successfully!");
-});
+}).catch(() => {
+  console.log("Can not connect DB")
+})
 
-// todo api
-app.use("/todo", todoRouter);
 app.use("/auth", authRouter);
+app.use("/address", addressRouter);
 
 app.use(errorMiddleware);
 
