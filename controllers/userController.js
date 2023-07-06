@@ -1,14 +1,15 @@
 const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
 const Address = require("../models/mysql/Address");
+const User = require("../models/mysql/User");
 const { ErrorResponse } = require("../response/ErrorResponse");
 
-const update = asyncMiddleware(async (req, res, next) => {
+const updateAddress = asyncMiddleware(async (req, res, next) => {
   const { city, address, province, zip } = req.body;
   const { id: userId } = req.user;
 
   const user = await Address.findOne({
     where: {
-      UserId: userId,
+      userId,
     },
   });
 
@@ -25,7 +26,7 @@ const update = asyncMiddleware(async (req, res, next) => {
     },
     {
       where: {
-        UserId: userId,
+        userId,
       },
     }
   );
@@ -36,6 +37,29 @@ const update = asyncMiddleware(async (req, res, next) => {
   });
 });
 
+const getMe = asyncMiddleware(async (req, res, next) => {
+  const { id: userId } = req.user;
+
+  const user = await User.findByPk(userId, {
+    attributes: {
+      exclude: ["password", "email"],
+    },
+
+    include: {
+      model: Address,
+      attributes: {
+        exclude: ["city"],
+      },
+    },
+  });
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
 module.exports = {
-  update,
+  updateAddress,
+  getMe,
 };

@@ -1,44 +1,47 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../database/mysql/connect");
-const Role = require("./Role");
+const Category = require("./Category");
 
-const User = sequelize.define("User", {
+const Product = sequelize.define("Product", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
 
-  username: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
 
-  email: {
+  description: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
 
-  phone: {
+  photo: {
     type: DataTypes.STRING,
     allowNull: true,
   },
 
-  password: {
+  price: {
     type: DataTypes.STRING,
     allowNull: false,
   },
 
-  role: {
-    defaultValue: "customer",
-    type: DataTypes.STRING,
+  amount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+
+  categoryId: {
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Role,
-      key: "slug",
+      model: Category,
+      key: "id",
     },
   },
 });
 
-module.exports = User;
+module.exports = Product;

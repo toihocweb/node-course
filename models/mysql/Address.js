@@ -11,22 +11,35 @@ const Address = sequelize.define("Address", {
 
   city: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: null,
   },
 
   province: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: null,
   },
 
   address: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: null,
   },
 
   zip: {
     type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: null,
+  },
+
+  userId: {
+    type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+      model: User,
+      key: "id",
+    },
   },
 });
 

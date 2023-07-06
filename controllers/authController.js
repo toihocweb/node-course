@@ -31,27 +31,16 @@ const register = asyncMiddleware(async (req, res, next) => {
   });
 
   // create address
-  // await Address.create({
-  //   city: "",
-  //   address: "",
-  //   province: "",
-  //   zip: "",
-  //   UserId: user.id,
-  // });
+  await Address.create({
+    city: "",
+    address: "",
+    province: "",
+    zip: "",
+    userId: user.id,
+  });
 
   res.status(201).json({
     success: true,
-  });
-});
-
-const getusers = asyncMiddleware(async (req, res, next) => {
-  const users = await User.findAll({
-    include: Address,
-  });
-
-  res.json({
-    success: true,
-    data: users,
   });
 });
 
