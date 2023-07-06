@@ -9,6 +9,7 @@ const morgan = require("morgan");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const roleRouter = require("./routes/role");
+const orderRouter = require("./routes/order");
 const categoryRouter = require("./routes/category");
 const productRouter = require("./routes/product");
 const { env } = require("./config/env");
@@ -52,6 +53,7 @@ app.use("/role", jwtAuth, authorize("super_admin"), roleRouter);
 app.use("/user", userRouter);
 app.use("/category", jwtAuth, authorize("owner"), categoryRouter);
 app.use("/product", productRouter);
+app.use("/order", orderRouter);
 
 app.use(errorMiddleware);
 
