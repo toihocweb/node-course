@@ -10,6 +10,7 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const roleRouter = require("./routes/role");
 const orderRouter = require("./routes/order");
+const fileRouter = require("./routes/file");
 const categoryRouter = require("./routes/category");
 const productRouter = require("./routes/product");
 const { env } = require("./config/env");
@@ -19,6 +20,8 @@ const Role = require("./models/mysql/Role");
 const { roles } = require("./constant/roles");
 const jwtAuth = require("./middlewares/jwtAuth");
 const { authorize } = require("./middlewares/authorize");
+const connectDB = require("./database/mongo/connect");
+const MongoDB = require("./database/mongo/connect");
 
 require("./models/mysql/relationship");
 
@@ -28,6 +31,9 @@ const PORT = env.PORT;
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
+
+// connect mongodb
+MongoDB.connect();
 
 // connect Mysql DB
 sequelize
@@ -48,12 +54,14 @@ sequelize
     console.log(JSON.stringify(err, null, 2));
   });
 
+app.use("/uploads", express.static("uploads"));
 app.use("/auth", authRouter);
 app.use("/role", jwtAuth, authorize("super_admin"), roleRouter);
 app.use("/user", userRouter);
 app.use("/category", jwtAuth, authorize("owner"), categoryRouter);
 app.use("/product", productRouter);
 app.use("/order", orderRouter);
+app.use("/file", fileRouter);
 
 app.use(errorMiddleware);
 

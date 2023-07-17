@@ -6,31 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <ul class="todo-list"></ul>
+
+    <video width="400" height="300" autoplay muted>
+        <source src="http://localhost:3000/file/c51257b5a7bb6d440c9010d395d28c435e4754e2.mp4" type="video/mp4">
+    </video>
+    
 </body>
-<script>
-    const todoListEle = document.querySelector(".todo-list")
-    // render todos to html 
-    const renderTodos = todos => {
-        let todoHtml = ""
-        todos.forEach(val => { 
-            todoHtml += `<li>${val.content}</li>`
-        })
-        todoListEle.innerHTML = todoHtml
-    }
-    // get todos 
-    const getTodos = async () => {
-        const res = await fetch("http://localhost:3000/todo")
-        const resJson = await res.json()
-
-        const { success , data } = resJson
-        if (success) { 
-            renderTodos(data)
-        } else { 
-            todoListEle.innerHTML = "Something wrong..."
-        }
-    }
-
-    getTodos()
-</script>
 </html>

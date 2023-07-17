@@ -4,7 +4,7 @@ const userSchema = require("../validations/userSchema");
 const orderController = require("../controllers/orderController");
 const jwtAuth = require("../middlewares/jwtAuth");
 const { authorize } = require("../middlewares/authorize");
-const { createOrder } = require("../validations/orderSchema");
+const { createOrder, cancelOrder } = require("../validations/orderSchema");
 
 const router = express.Router();
 
@@ -15,7 +15,12 @@ router.get(
   orderController.getOrderDetailById
 );
 
-router.get("/", jwtAuth, authorize("customer"), orderController.getAllOrders);
+router.get(
+  "/",
+  jwtAuth,
+  authorize("customer", "owner"),
+  orderController.getAllOrders
+);
 
 router.post(
   "/",
@@ -25,18 +30,33 @@ router.post(
   orderController.createOrder
 );
 
-// router.delete(
-//   "/:id",
-//   jwtAuth,
-//   authorize("owner"),
-//   productController.deleteProduct
-// );
+router.delete(
+  "/:id",
+  jwtAuth,
+  authorize("owner"),
+  orderController.deleteOrderById
+);
 
-// router.patch(
-//   "/:id",
-//   jwtAuth,
-//   authorize("owner"),
-//   productController.updateProduct
-// );
+router.patch(
+  "/:id/cancel",
+  jwtAuth,
+  authorize("owner", "customer"),
+  validator(cancelOrder),
+  orderController.cancelOrderById
+);
+
+router.patch(
+  "/:id/done",
+  jwtAuth,
+  authorize("owner"),
+  orderController.setOrderDone
+);
+
+router.patch(
+  "/:id/delivery",
+  jwtAuth,
+  authorize("owner"),
+  orderController.setOrderDelivery
+);
 
 module.exports = router;

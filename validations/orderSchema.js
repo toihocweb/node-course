@@ -12,6 +12,11 @@ const createOrder = Joi.object({
     .required(),
 });
 
+const cancelOrder = Joi.object({
+  reason: Joi.string().required(),
+});
+
 module.exports = {
   createOrder,
+  cancelOrder,
 };

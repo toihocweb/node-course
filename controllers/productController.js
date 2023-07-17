@@ -5,17 +5,19 @@ const Product = require("../models/mysql/Product");
 const createProduct = asyncMiddleware(async (req, res, next) => {
   const { name, description, price, amount, categoryId } = req.body;
 
-  await Product.create({
-    name,
-    description,
-    price,
-    amount,
-    categoryId,
-  });
+  console.log(req.file);
+  // await Product.create({
+  //   name,
+  //   description,
+  //   price,
+  //   amount,
+  //   categoryId,
+  //   photo: filename,
+  // });
 
-  res.status(201).json({
-    success: true,
-  });
+  // res.status(201).json({
+  //   success: true,
+  // });
 });
 
 const getProduct = asyncMiddleware(async (req, res, next) => {
