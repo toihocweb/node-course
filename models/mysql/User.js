@@ -30,6 +30,11 @@ const User = sequelize.define("User", {
     allowNull: false,
   },
 
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+
   role: {
     defaultValue: "customer",
     type: DataTypes.STRING,

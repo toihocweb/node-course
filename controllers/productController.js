@@ -1,23 +1,30 @@
 const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
 const Category = require("../models/mysql/Category");
 const Product = require("../models/mysql/Product");
+const { ErrorResponse } = require("../response/ErrorResponse");
 
 const createProduct = asyncMiddleware(async (req, res, next) => {
   const { name, description, price, amount, categoryId } = req.body;
 
-  console.log(req.file);
-  // await Product.create({
-  //   name,
-  //   description,
-  //   price,
-  //   amount,
-  //   categoryId,
-  //   photo: filename,
-  // });
+  const filename = req.file?.filename;
+  const size = req.file?.size;
 
-  // res.status(201).json({
-  //   success: true,
-  // });
+  const FILE_LIMIT = 5 * 1024 * 1024;
+  if (size && size > FILE_LIMIT) {
+    throw new ErrorResponse(400, "File too large");
+  }
+  await Product.create({
+    name,
+    description,
+    price,
+    amount,
+    categoryId,
+    photo: filename,
+  });
+
+  res.status(201).json({
+    success: true,
+  });
 });
 
 const getProduct = asyncMiddleware(async (req, res, next) => {

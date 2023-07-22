@@ -14,7 +14,6 @@ const createOrder = asyncMiddleware(async (req, res, next) => {
   });
 
   // Order - Product
-
   const prods = products.map((product) => ({
     orderId: order.id,
     productId: product.id,

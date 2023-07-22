@@ -13,7 +13,6 @@ class MongoDB {
       this.gfs = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: env.MONGO_BUCKET,
       });
-      console.log(this.gfs);
     });
   }
 }

@@ -1,5 +1,6 @@
 const Address = require("./Address");
 const Category = require("./Category");
+const Coupon = require("./Coupon");
 const Order = require("./Order");
 const OrderProduct = require("./OrderProduct");
 const Product = require("./Product");
@@ -47,4 +48,14 @@ User.hasMany(Order, {
 });
 Order.belongsTo(User, {
   foreignKey: "userId",
+});
+
+// Coupon - Order
+
+Order.hasMany(Coupon, {
+  foreignKey: "couponId",
+});
+
+Coupon.belongsTo(Order, {
+  foreignKey: "couponId",
 });

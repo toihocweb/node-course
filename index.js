@@ -13,6 +13,7 @@ const orderRouter = require("./routes/order");
 const fileRouter = require("./routes/file");
 const categoryRouter = require("./routes/category");
 const productRouter = require("./routes/product");
+const couponRouter = require("./routes/coupon");
 const { env } = require("./config/env");
 const { errorMiddleware } = require("./middlewares/errorMiddleware");
 const sequelize = require("./database/mysql/connect");
@@ -37,7 +38,7 @@ MongoDB.connect();
 
 // connect Mysql DB
 sequelize
-  .sync({ force: false })
+  .sync({ force: false, logging: false })
   .then(() => {
     console.log("Connected Database Successfully!");
   })
@@ -61,6 +62,7 @@ app.use("/user", userRouter);
 app.use("/category", jwtAuth, authorize("owner"), categoryRouter);
 app.use("/product", productRouter);
 app.use("/order", orderRouter);
+app.use("/coupon", authorize("owner"), couponRouter);
 app.use("/file", fileRouter);
 
 app.use(errorMiddleware);

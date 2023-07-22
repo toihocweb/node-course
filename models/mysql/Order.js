@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../database/mysql/connect");
 const User = require("./User");
+const Coupon = require("./Coupon");
 
 // status: pending, approved, delivered, done, cancelled
 const Order = sequelize.define(
@@ -55,10 +56,18 @@ const Order = sequelize.define(
         key: "id",
       },
     },
+
+    couponId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Coupon,
+        key: "id",
+      },
+    },
   },
   {
     paranoid: true,
   }
 );
-
+  
 module.exports = Order;

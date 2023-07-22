@@ -6,6 +6,9 @@ const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
 const { ErrorResponse } = require("../response/ErrorResponse");
 const User = require("../models/mysql/User");
 const Address = require("../models/mysql/Address");
+const mail = require("../services/mail");
+const { generateOtp } = require("../utils/otp");
+const RegisterOtp = require("../models/mongo/RegisterOtp");
 
 const register = asyncMiddleware(async (req, res, next) => {
   const { username, email, password, phone } = req.body;
@@ -30,14 +33,28 @@ const register = asyncMiddleware(async (req, res, next) => {
     password: hashedPassword,
   });
 
-  // create address
-  await Address.create({
-    city: "",
-    address: "",
-    province: "",
-    zip: "",
-    userId: user.id,
+  const otp = generateOtp();
+
+  const registerOtp = new RegisterOtp({
+    email,
+    otp,
   });
+
+  await Promise.all([
+    registerOtp.save(),
+    Address.create({
+      city: "",
+      address: "",
+      province: "",
+      zip: "",
+      userId: user.id,
+    }),
+    mail.sendMail({
+      to: email,
+      subject: "Your OTP",
+      html: `<h1>Your OTP Code: ${otp}</h1>`,
+    }),
+  ]);
 
   res.status(201).json({
     success: true,
@@ -79,7 +96,46 @@ const login = asyncMiddleware(async (req, res, next) => {
   });
 });
 
+const verifyOtp = asyncMiddleware(async (req, res, next) => {
+  const { otp, email } = req.body;
+
+  const user = await RegisterOtp.findOne({
+    email,
+  });
+
+  if (!user) {
+    throw new ErrorResponse(401, "Unauthorized");
+  }
+
+  if (user.otp !== otp) {
+    throw new ErrorResponse(400, "Can not verify otp");
+  }
+
+  const updateUser = User.update(
+    {
+      isVerified: true,
+    },
+    {
+      where: {
+        email,
+      },
+    }
+  );
+
+  const deleteOTp = RegisterOtp.deleteOne({
+    email,
+  });
+
+  await Promise.all([updateUser, deleteOTp]);
+
+  res.json({
+    success: true,
+    message: "Verify otp successfully",
+  });
+});
+
 module.exports = {
   register,
   login,
+  verifyOtp,
 };

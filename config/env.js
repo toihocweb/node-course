@@ -10,4 +10,9 @@ exports.env = {
   MYSQL_USER: process.env.MYSQL_USER || "root",
   MYSQL_PASSWORD: process.env.MYSQL_PASSWORD || "root",
   MYSQL_DATABASE: process.env.MYSQL_DATABASE || "my_database",
+
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || "123456",
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || "123456",
+  GOOGLE_REFRESH_TOKEN: process.env.GOOGLE_REFRESH_TOKEN || "123456",
+  GOOGLE_TEST_EMAIL: process.env.GOOGLE_TEST_EMAIL || "test@gmail.com",
 };

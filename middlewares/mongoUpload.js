@@ -26,18 +26,12 @@ const storage = new GridFsStorage({
 
 const fileFilter = (req, file, cb) => {
   const { originalname } = file;
-  if (!originalname.match(/\.(jpg|png|jpeg|mp4)$/i)) {
+  if (!originalname.match(/\.(jpg|png|jpeg|mp4|pdf)$/i)) {
     return cb(new Error(`Not support ${path.extname(originalname)}`), false);
   }
   cb(null, true);
 };
 
-const FILE_LIMIT = 5; // 5MB
-
-const limits = {
-  fileSize: FILE_LIMIT * 1024 * 1024,
-};
-
-const mongoUpload = multer({ storage, fileFilter, limits });
+const mongoUpload = multer({ storage, fileFilter });
 
 module.exports = mongoUpload;
