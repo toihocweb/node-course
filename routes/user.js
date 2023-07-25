@@ -15,4 +15,33 @@ router.patch(
 
 router.get("/me", jwtAuth, userController.getMe);
 
+router.patch(
+  "/change-password",
+  validator(userSchema.changePassword),
+  jwtAuth,
+  userController.changePassword
+);
+
+router.post(
+  "/forgot-password",
+  validator(userSchema.forgotPassword),
+  userController.forgotPassword
+);
+
+router.post(
+  "/verify-token",
+  validator(userSchema.verifyForgotToken),
+  userController.verifyForgotToken
+);
+
+router.post(
+  "/reset-password",
+  validator(userSchema.resetPassword),
+  userController.resetPassword
+);
+
+
+
+
+
 module.exports = router;

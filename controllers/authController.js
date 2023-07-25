@@ -9,6 +9,7 @@ const Address = require("../models/mysql/Address");
 const mail = require("../services/mail");
 const { generateOtp } = require("../utils/otp");
 const RegisterOtp = require("../models/mongo/RegisterOtp");
+const { hashPassword } = require("../utils/hashPassword");
 
 const register = asyncMiddleware(async (req, res, next) => {
   const { username, email, password, phone } = req.body;
@@ -23,8 +24,7 @@ const register = asyncMiddleware(async (req, res, next) => {
     throw new ErrorResponse(409, "Email is already existed");
   }
 
-  const salt = bcrypt.genSaltSync(12);
-  const hashedPassword = bcrypt.hashSync(password, salt);
+  const hashedPassword = hashPassword(password);
 
   const user = await User.create({
     username,
