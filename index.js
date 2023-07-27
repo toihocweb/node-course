@@ -21,11 +21,11 @@ const Role = require("./models/mysql/Role");
 const { roles } = require("./constant/roles");
 const jwtAuth = require("./middlewares/jwtAuth");
 const { authorize } = require("./middlewares/authorize");
-const connectDB = require("./database/mongo/connect");
 const MongoDB = require("./database/mongo/connect");
+const { limiter } = require("./middlewares/limiter");
+const basicAuth = require("./middlewares/basicAuth");
 
 require("./models/mysql/relationship");
-
 
 const PORT = env.PORT;
 
@@ -57,7 +57,7 @@ sequelize
   });
 
 app.use("/uploads", express.static("uploads"));
-app.use("/auth", authRouter);
+app.use("/auth", limiter({ max: 100 }), basicAuth, authRouter);
 app.use("/role", jwtAuth, authorize("super_admin"), roleRouter);
 app.use("/user", userRouter);
 app.use("/category", jwtAuth, authorize("owner"), categoryRouter);
