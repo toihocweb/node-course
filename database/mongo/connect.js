@@ -6,8 +6,8 @@ class MongoDB {
     mongoose
       .connect(
         env.MONGO_USERNAME && env.MONGO_PASSWORD
-          ? `mongodb://${env.MONGO_USERNAME}:${env.MONGO_PASSWORD}@localhost:27017/nodejs-course`
-          : `mongodb://localhost:27017/nodejs-course`
+          ? `mongodb://${env.MONGO_USERNAME}:${env.MONGO_PASSWORD}@${env.MONGO_HOST}:${env.MONGO_PORT}/${env.MONGO_DATABASE}`
+          : `mongodb://${env.MONGO_HOST}:${env.MONGO_PORT}/${env.MONGO_DATABASE}`
       )
       .then(() => {
         console.log("mongodb connected successfully!");

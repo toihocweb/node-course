@@ -6,7 +6,7 @@ const path = require("path");
 const { env } = require("../config/env");
 
 const storage = new GridFsStorage({
-  url: env.MONGO_URI,
+  url: `mongodb://${env.MONGO_HOST}:${env.MONGO_PORT}/${env.MONGO_DATABASE}`,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(20, (err, buf) => {
