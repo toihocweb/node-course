@@ -25,4 +25,9 @@ exports.env = {
 
   BASIC_USER: process.env.BASIC_USER || "user",
   BASIC_PASSWORD: process.env.BASIC_PASSWORD || "password",
+  getMongoUri() {
+    return this.MONGO_USERNAME && this.MONGO_PASSWORD
+      ? `mongodb://${this.MONGO_USERNAME}:${this.MONGO_PASSWORD}@${this.MONGO_HOST}:${this.MONGO_PORT}/${this.MONGO_DATABASE}?authSource=admin`
+      : `mongodb://${this.MONGO_HOST}:${this.MONGO_PORT}/${this.MONGO_DATABASE}`;
+  },
 };

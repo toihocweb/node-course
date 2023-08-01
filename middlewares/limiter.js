@@ -5,7 +5,7 @@ const { env } = require("../config/env");
 const limiter = ({ windowMs = 1 * 60 * 1000, max = 60 }) => {
   return rateLimit({
     store: new MongoStore({
-      uri: `mongodb://${env.MONGO_HOST}:${env.MONGO_PORT}/${env.MONGO_DATABASE}`,
+      uri: env.getMongoUri(),
       user: env.MONGO_USERNAME,
       password: env.MONGO_PASSWORD,
       expireTimeMs: windowMs,

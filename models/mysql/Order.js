@@ -67,6 +67,7 @@ const Order = sequelize.define(
   },
   {
     paranoid: true,
+    tableName: "orders",
   }
 );
   
