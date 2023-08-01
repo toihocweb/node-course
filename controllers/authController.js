@@ -33,15 +33,15 @@ const register = asyncMiddleware(async (req, res, next) => {
     password: hashedPassword,
   });
 
-  const otp = generateOtp();
+  // const otp = generateOtp();
 
-  const registerOtp = new RegisterOtp({
-    email,
-    otp,
-  });
+  // const registerOtp = new RegisterOtp({
+  //   email,
+  //   otp,
+  // });
 
   await Promise.all([
-    registerOtp.save(),
+    // registerOtp.save(),
     Address.create({
       city: "",
       address: "",
@@ -49,11 +49,11 @@ const register = asyncMiddleware(async (req, res, next) => {
       zip: "",
       userId: user.id,
     }),
-    mail.sendMail({
-      to: email,
-      subject: "Your OTP",
-      html: `<h1>Your OTP Code: ${otp}</h1>`,
-    }),
+    // mail.sendMail({
+    //   to: email,
+    //   subject: "Your OTP",
+    //   html: `<h1>Your OTP Code: ${otp}</h1>`,
+    // }),
   ]);
 
   res.status(201).json({

@@ -39,17 +39,9 @@ MongoDB.connect();
 
 // connect Mysql DB
 sequelize
-  .sync({ force: false, logging: false })
+  .authenticate()
   .then(() => {
     console.log("Connected Database Successfully!");
-  })
-  .then(() => {
-    // insert array of roles into table
-    Role.bulkCreate(roles, {
-      ignoreDuplicates: true,
-    }).then(() => {
-      console.log("Roles inserted");
-    });
   })
   .catch((err) => {
     console.log("Can not connect DB");
