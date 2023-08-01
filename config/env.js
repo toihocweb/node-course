@@ -5,6 +5,8 @@ exports.env = {
   ENV: process.env.NODE_ENV || "development",
   SECRET_KEY: process.env.SECRET_KEY || "123456",
   MONGO_URI: process.env.MONGO_URI || "mongodb://localhost:27017/nodejs-course",
+  MONGO_USERNAME: process.env.MONGO_USERNAME,
+  MONGO_PASSWORD: process.env.MONGO_PASSWORD,
   MONGO_BUCKET: process.env.MONGO_BUCKET || "uploads",
   EXPIRED_IN: process.env.EXPIRED_IN || "1d",
 
