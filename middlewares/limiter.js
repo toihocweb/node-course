@@ -6,8 +6,6 @@ const limiter = ({ windowMs = 1 * 60 * 1000, max = 60 }) => {
   return rateLimit({
     store: new MongoStore({
       uri: env.getMongoUri(),
-      user: env.MONGO_USERNAME,
-      password: env.MONGO_PASSWORD,
       expireTimeMs: windowMs,
       errorHandler: console.error.bind(null, "rate-limit-mongo"),
     }),
