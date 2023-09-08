@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const forgotToken = new mongoose.Schema(
   {
@@ -15,9 +15,9 @@ const forgotToken = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 forgotToken.index({ createdAt: 1 }, { expireAfterSeconds: 60 });
 
-module.exports = mongoose.model("ForgotToken", forgotToken);
+module.exports = mongoose.model('ForgotToken', forgotToken);

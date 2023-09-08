@@ -1,0 +1,44 @@
+type User {
+  _id: ObjectID!
+  name: String!
+  email: EmailAddress!
+  age: Int
+  todos: [Todo!]
+}
+
+type Todo {
+  _id: ObjectID!
+  title: String!
+  completed: Boolean!
+  user: User!
+}
+
+type Query {
+  todos: [Todo!]
+}
+
+type Token {
+  token: String!
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!): Todo
+  register(input: RegisterInput!): User
+  login(input: LoginInput!): Token
+}
+
+input RegisterInput {
+  name: String!
+  email: EmailAddress!
+  password: String!
+  age: Int
+}
+
+input LoginInput {
+  email: EmailAddress!
+  password: String!
+}
+
+input CreateTodoInput {
+  title: String!
+}

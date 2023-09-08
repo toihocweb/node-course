@@ -1,8 +1,8 @@
-const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
-const Order = require("../models/mysql/Order");
-const OrderProduct = require("../models/mysql/OrderProduct");
-const Product = require("../models/mysql/Product");
-const { ErrorResponse } = require("../response/ErrorResponse");
+const { asyncMiddleware } = require('../middlewares/asyncMiddleware');
+const Order = require('../models/mysql/Order');
+const OrderProduct = require('../models/mysql/OrderProduct');
+const Product = require('../models/mysql/Product');
+const { ErrorResponse } = require('../response/ErrorResponse');
 
 const createCoupon = asyncMiddleware(async (req, res, next) => {
   res.status(201).json({

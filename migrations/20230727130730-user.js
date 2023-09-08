@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,7 +10,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable('users', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -44,24 +44,24 @@ module.exports = {
       },
 
       role: {
-        defaultValue: "customer",
+        defaultValue: 'customer',
         type: DataTypes.STRING,
         allowNull: false,
         references: {
-          model: "roles",
-          key: "slug",
+          model: 'roles',
+          key: 'slug',
         },
       },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal(
-          "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
         ),
       },
       deletedAt: {
@@ -78,6 +78,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable('users');
   },
 };

@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../database/mysql/connect");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../database/mysql/connect');
 
 const Coupon = sequelize.define(
-  "Coupon",
+  'Coupon',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -27,9 +27,9 @@ const Coupon = sequelize.define(
     },
 
     type: {
-      type: DataTypes.ENUM("percent", "money"),
+      type: DataTypes.ENUM('percent', 'money'),
       allowNull: false,
-      defaultValue: "percent",
+      defaultValue: 'percent',
     },
 
     start_date: {
@@ -43,8 +43,8 @@ const Coupon = sequelize.define(
     },
   },
   {
-    tableName: "coupons",
-  }
+    tableName: 'coupons',
+  },
 );
 
 module.exports = Coupon;

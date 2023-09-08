@@ -1,61 +1,61 @@
-const Address = require("./Address");
-const Category = require("./Category");
-const Coupon = require("./Coupon");
-const Order = require("./Order");
-const OrderProduct = require("./OrderProduct");
-const Product = require("./Product");
-const Role = require("./Role");
-const User = require("./User");
+const Address = require('./Address');
+const Category = require('./Category');
+const Coupon = require('./Coupon');
+const Order = require('./Order');
+const OrderProduct = require('./OrderProduct');
+const Product = require('./Product');
+const Role = require('./Role');
+const User = require('./User');
 
 // user - address
 User.hasOne(Address, {
-  foreignKey: "userId",
+  foreignKey: 'userId',
 });
 Address.belongsTo(User, {
-  foreignKey: "userId",
+  foreignKey: 'userId',
 });
 
 // product - category
 Category.hasMany(Product, {
-  foreignKey: "categoryId",
+  foreignKey: 'categoryId',
 });
 Product.belongsTo(Category, {
-  foreignKey: "categoryId",
+  foreignKey: 'categoryId',
 });
 
 // user - role
 User.belongsTo(Role, {
-  foreignKey: "role",
+  foreignKey: 'role',
 });
 
 Role.hasMany(User, {
-  foreignKey: "role",
+  foreignKey: 'role',
 });
 
 // Order - Product
 Order.belongsToMany(Product, {
   through: OrderProduct,
-  foreignKey: "orderId",
+  foreignKey: 'orderId',
 });
 Product.belongsToMany(Order, {
   through: OrderProduct,
-  foreignKey: "productId",
+  foreignKey: 'productId',
 });
 
 // Order - User
 User.hasMany(Order, {
-  foreignKey: "userId",
+  foreignKey: 'userId',
 });
 Order.belongsTo(User, {
-  foreignKey: "userId",
+  foreignKey: 'userId',
 });
 
 // Coupon - Order
 
 Order.hasMany(Coupon, {
-  foreignKey: "couponId",
+  foreignKey: 'couponId',
 });
 
 Coupon.belongsTo(Order, {
-  foreignKey: "couponId",
+  foreignKey: 'couponId',
 });

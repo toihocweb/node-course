@@ -1,9 +1,9 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../database/mysql/connect");
-const User = require("./User");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../database/mysql/connect');
+const User = require('./User');
 
 const Address = sequelize.define(
-  "Address",
+  'Address',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -40,13 +40,13 @@ const Address = sequelize.define(
       allowNull: false,
       references: {
         model: User,
-        key: "id",
+        key: 'id',
       },
     },
   },
   {
-    tableName: "addresses",
-  }
+    tableName: 'addresses',
+  },
 );
 
 module.exports = Address;

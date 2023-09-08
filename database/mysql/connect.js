@@ -1,5 +1,5 @@
-const { Sequelize } = require("sequelize");
-const { env } = require("../../config/env");
+const { Sequelize } = require('sequelize');
+const { env } = require('../../config/env');
 
 const sequelize = new Sequelize(
   env.MYSQL_DATABASE,
@@ -8,8 +8,8 @@ const sequelize = new Sequelize(
   {
     host: env.MYSQL_HOST,
     port: env.MYSQL_PORT,
-    dialect: "mysql",
-  }
+    dialect: 'mysql',
+  },
 );
 
 module.exports = sequelize;

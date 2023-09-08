@@ -1,9 +1,9 @@
-const multer = require("multer");
-const { GridFsStorage } = require("multer-gridfs-storage");
-const crypto = require("crypto");
+const multer = require('multer');
+const { GridFsStorage } = require('multer-gridfs-storage');
+const crypto = require('crypto');
 
-const path = require("path");
-const { env } = require("../config/env");
+const path = require('path');
+const { env } = require('../config/env');
 
 const storage = new GridFsStorage({
   url: env.getMongoUri(),
@@ -13,7 +13,7 @@ const storage = new GridFsStorage({
         if (err) {
           return reject(err);
         }
-        const filename = buf.toString("hex") + path.extname(file.originalname);
+        const filename = buf.toString('hex') + path.extname(file.originalname);
         const fileInfo = {
           filename,
           bucketName: env.MONGO_BUCKET,

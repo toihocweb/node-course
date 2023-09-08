@@ -1,5 +1,5 @@
-const { pwSchema, emailSchema } = require("./authShema");
-const Joi = require("./joi");
+const { pwSchema, emailSchema } = require('./authShema');
+const Joi = require('./joi');
 
 const updateAddress = Joi.object({
   city: Joi.string(),

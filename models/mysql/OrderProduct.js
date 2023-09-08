@@ -1,10 +1,10 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../database/mysql/connect");
-const Order = require("./Order");
-const Product = require("./Product");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../database/mysql/connect');
+const Order = require('./Order');
+const Product = require('./Product');
 
 const OrderProduct = sequelize.define(
-  "order_products",
+  'order_products',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -17,7 +17,7 @@ const OrderProduct = sequelize.define(
       allowNull: false,
       references: {
         model: Order,
-        key: "id",
+        key: 'id',
       },
     },
 
@@ -26,7 +26,7 @@ const OrderProduct = sequelize.define(
       allowNull: false,
       references: {
         model: Product,
-        key: "id",
+        key: 'id',
       },
     },
 
@@ -37,8 +37,8 @@ const OrderProduct = sequelize.define(
   },
   {
     paranoid: true,
-    tableName: "order_products",
-  }
+    tableName: 'order_products',
+  },
 );
 
 module.exports = OrderProduct;

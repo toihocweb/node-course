@@ -1,8 +1,8 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 const {
   generateOAuthAccessToken,
-} = require("../utils/generateOAuthAccessToken");
-const { env } = require("../config/env");
+} = require('../utils/generateOAuthAccessToken');
+const { env } = require('../config/env');
 
 class EmailService {
   constructor() {
@@ -11,9 +11,9 @@ class EmailService {
 
   initTransporter() {
     this.transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: 'gmail',
       auth: {
-        type: "OAuth2",
+        type: 'OAuth2',
         clientId: env.GOOGLE_CLIENT_ID,
         clientSecret: env.GOOGLE_CLIENT_SECRET,
       },

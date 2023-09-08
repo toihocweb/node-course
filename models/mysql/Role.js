@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../database/mysql/connect");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../database/mysql/connect');
 
 const Role = sequelize.define(
-  "Role",
+  'Role',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -22,8 +22,8 @@ const Role = sequelize.define(
     },
   },
   {
-    tableName: "roles",
-  }
+    tableName: 'roles',
+  },
 );
 
 module.exports = Role;

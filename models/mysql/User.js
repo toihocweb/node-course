@@ -1,9 +1,9 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../database/mysql/connect");
-const Role = require("./Role");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../database/mysql/connect');
+const Role = require('./Role');
 
 const User = sequelize.define(
-  "User",
+  'User',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -38,18 +38,18 @@ const User = sequelize.define(
     },
 
     role: {
-      defaultValue: "customer",
+      defaultValue: 'customer',
       type: DataTypes.STRING,
       allowNull: false,
       references: {
         model: Role,
-        key: "slug",
+        key: 'slug',
       },
     },
   },
   {
-    tableName: "users",
-  }
+    tableName: 'users',
+  },
 );
 
 module.exports = User;

@@ -1,8 +1,8 @@
-const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
-const Order = require("../models/mysql/Order");
-const OrderProduct = require("../models/mysql/OrderProduct");
-const Product = require("../models/mysql/Product");
-const { ErrorResponse } = require("../response/ErrorResponse");
+const { asyncMiddleware } = require('../middlewares/asyncMiddleware');
+const Order = require('../models/mysql/Order');
+const OrderProduct = require('../models/mysql/OrderProduct');
+const Product = require('../models/mysql/Product');
+const { ErrorResponse } = require('../response/ErrorResponse');
 
 const createOrder = asyncMiddleware(async (req, res, next) => {
   const { note, products } = req.body;
@@ -49,7 +49,7 @@ const getAllOrders = asyncMiddleware(async (req, res, next) => {
   const { id: userId, role } = req.user;
 
   let orders = [];
-  if (role === "customer") {
+  if (role === 'customer') {
     orders = await Order.findAll({
       where: {
         userId,
@@ -58,7 +58,7 @@ const getAllOrders = asyncMiddleware(async (req, res, next) => {
     });
   }
 
-  if (role === "owner") {
+  if (role === 'owner') {
     orders = await Order.findAll({
       include: [Product],
     });
@@ -86,7 +86,7 @@ const deleteOrderById = asyncMiddleware(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Order deleted",
+    message: 'Order deleted',
   });
 });
 
@@ -102,23 +102,23 @@ const cancelOrderById = asyncMiddleware(async (req, res, next) => {
   });
 
   if (!order) {
-    throw new ErrorResponse(404, "Order not found");
+    throw new ErrorResponse(404, 'Order not found');
   }
 
-  if (!["pending", "approved"].includes(order.status)) {
-    throw new ErrorResponse(400, "You can not cancel this order");
+  if (!['pending', 'approved'].includes(order.status)) {
+    throw new ErrorResponse(400, 'You can not cancel this order');
   }
 
   const { userId: orderUserId } = order;
-  if (role === "customer" && orderUserId !== userId) {
-    throw new ErrorResponse(403, "You are not allowed to cancel this order");
+  if (role === 'customer' && orderUserId !== userId) {
+    throw new ErrorResponse(403, 'You are not allowed to cancel this order');
   }
 
-  if (role === "customer" && order.status !== "pending") {
-    throw new ErrorResponse(400, "You can not cancel this order");
+  if (role === 'customer' && order.status !== 'pending') {
+    throw new ErrorResponse(400, 'You can not cancel this order');
   }
 
-  order.status = "cancelled";
+  order.status = 'cancelled';
   order.cancelledBy = userId;
   order.cancelled_at = new Date();
   order.cancelledReason = reason;
@@ -126,7 +126,7 @@ const cancelOrderById = asyncMiddleware(async (req, res, next) => {
 
   res.json({
     success: true,
-    message: "Order cancelled",
+    message: 'Order cancelled',
   });
 });
 
@@ -140,15 +140,15 @@ const setOrderDone = asyncMiddleware(async (req, res, next) => {
   });
 
   if (!order) {
-    throw new ErrorResponse(404, "Order not found");
+    throw new ErrorResponse(404, 'Order not found');
   }
 
-  order.status = "done";
+  order.status = 'done';
   order.received_at = new Date();
   await order.save();
   res.json({
     success: true,
-    message: "Order done",
+    message: 'Order done',
   });
 });
 
@@ -162,14 +162,14 @@ const setOrderDelivery = asyncMiddleware(async (req, res, next) => {
   });
 
   if (!order) {
-    throw new ErrorResponse(404, "Order not found");
+    throw new ErrorResponse(404, 'Order not found');
   }
 
-  order.status = "delivery";
+  order.status = 'delivery';
   await order.save();
   res.json({
     success: true,
-    message: "Order delivery",
+    message: 'Order delivery',
   });
 });
 

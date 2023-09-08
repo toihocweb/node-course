@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const registerOtpSchema = new mongoose.Schema(
   {
@@ -14,9 +14,9 @@ const registerOtpSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 registerOtpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 5 });
 
-module.exports = mongoose.model("RegisterOtp", registerOtpSchema);
+module.exports = mongoose.model('RegisterOtp', registerOtpSchema);

@@ -1,62 +1,62 @@
-const express = require("express");
-const validator = require("../middlewares/validator");
-const userSchema = require("../validations/userSchema");
-const orderController = require("../controllers/orderController");
-const jwtAuth = require("../middlewares/jwtAuth");
-const { authorize } = require("../middlewares/authorize");
-const { createOrder, cancelOrder } = require("../validations/orderSchema");
+const express = require('express');
+const validator = require('../middlewares/validator');
+const userSchema = require('../validations/userSchema');
+const orderController = require('../controllers/orderController');
+const jwtAuth = require('../middlewares/jwtAuth');
+const { authorize } = require('../middlewares/authorize');
+const { createOrder, cancelOrder } = require('../validations/orderSchema');
 
 const router = express.Router();
 
 router.get(
-  "/:id",
+  '/:id',
   jwtAuth,
-  authorize("customer"),
-  orderController.getOrderDetailById
+  authorize('customer'),
+  orderController.getOrderDetailById,
 );
 
 router.get(
-  "/",
+  '/',
   jwtAuth,
-  authorize("customer", "owner"),
-  orderController.getAllOrders
+  authorize('customer', 'owner'),
+  orderController.getAllOrders,
 );
 
 router.post(
-  "/",
+  '/',
   jwtAuth,
-  authorize("customer"),
+  authorize('customer'),
   validator(createOrder),
-  orderController.createOrder
+  orderController.createOrder,
 );
 
 router.delete(
-  "/:id",
+  '/:id',
   jwtAuth,
-  authorize("owner"),
-  orderController.deleteOrderById
+  authorize('owner'),
+  orderController.deleteOrderById,
 );
 
 router.patch(
-  "/:id/cancel",
+  '/:id/cancel',
   jwtAuth,
-  authorize("owner", "customer"),
+  authorize('owner', 'customer'),
   validator(cancelOrder),
-  orderController.cancelOrderById
+  orderController.cancelOrderById,
 );
 
 router.patch(
-  "/:id/done",
+  '/:id/done',
   jwtAuth,
-  authorize("owner"),
-  orderController.setOrderDone
+  authorize('owner'),
+  orderController.setOrderDone,
 );
 
 router.patch(
-  "/:id/delivery",
+  '/:id/delivery',
   jwtAuth,
-  authorize("owner"),
-  orderController.setOrderDelivery
+  authorize('owner'),
+  orderController.setOrderDelivery,
 );
 
 module.exports = router;

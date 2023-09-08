@@ -1,47 +1,43 @@
-const express = require("express");
-const validator = require("../middlewares/validator");
-const userSchema = require("../validations/userSchema");
-const userController = require("../controllers/userController");
-const jwtAuth = require("../middlewares/jwtAuth");
+const express = require('express');
+const validator = require('../middlewares/validator');
+const userSchema = require('../validations/userSchema');
+const userController = require('../controllers/userController');
+const jwtAuth = require('../middlewares/jwtAuth');
 
 const router = express.Router();
 
 router.patch(
-  "/address",
+  '/address',
   validator(userSchema.updateAddress),
   jwtAuth,
-  userController.updateAddress
+  userController.updateAddress,
 );
 
-router.get("/me", jwtAuth, userController.getMe);
+router.get('/me', jwtAuth, userController.getMe);
 
 router.patch(
-  "/change-password",
+  '/change-password',
   validator(userSchema.changePassword),
   jwtAuth,
-  userController.changePassword
+  userController.changePassword,
 );
 
 router.post(
-  "/forgot-password",
+  '/forgot-password',
   validator(userSchema.forgotPassword),
-  userController.forgotPassword
+  userController.forgotPassword,
 );
 
 router.post(
-  "/verify-token",
+  '/verify-token',
   validator(userSchema.verifyForgotToken),
-  userController.verifyForgotToken
+  userController.verifyForgotToken,
 );
 
 router.post(
-  "/reset-password",
+  '/reset-password',
   validator(userSchema.resetPassword),
-  userController.resetPassword
+  userController.resetPassword,
 );
-
-
-
-
 
 module.exports = router;

@@ -1,5 +1,5 @@
-const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
-const Category = require("../models/mysql/Category");
+const { asyncMiddleware } = require('../middlewares/asyncMiddleware');
+const Category = require('../models/mysql/Category');
 
 const createCategory = asyncMiddleware(async (req, res, next) => {
   const { name, slug } = req.body;
@@ -34,7 +34,7 @@ const deleteCategory = asyncMiddleware(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Delete category successfully",
+    message: 'Delete category successfully',
   });
 });
 
@@ -52,12 +52,12 @@ const updateCategory = asyncMiddleware(async (req, res, next) => {
       where: {
         id,
       },
-    }
+    },
   );
 
   res.status(200).json({
     success: true,
-    message: "Update category successfully",
+    message: 'Update category successfully',
   });
 });
 

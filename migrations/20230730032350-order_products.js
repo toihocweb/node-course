@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,7 +10,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable("order_products", {
+    await queryInterface.createTable('order_products', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -21,8 +21,8 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "orders",
-          key: "id",
+          model: 'orders',
+          key: 'id',
         },
       },
 
@@ -30,8 +30,8 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "products",
-          key: "id",
+          model: 'products',
+          key: 'id',
         },
       },
 
@@ -42,13 +42,13 @@ module.exports = {
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal(
-          "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
         ),
       },
       deletedAt: {
@@ -65,6 +65,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("order_products");
+    await queryInterface.dropTable('order_products');
   },
 };

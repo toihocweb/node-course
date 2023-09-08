@@ -1,11 +1,11 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../database/mysql/connect");
-const User = require("./User");
-const Coupon = require("./Coupon");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../database/mysql/connect');
+const User = require('./User');
+const Coupon = require('./Coupon');
 
 // status: pending, approved, delivered, done, cancelled
 const Order = sequelize.define(
-  "Order",
+  'Order',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -15,7 +15,7 @@ const Order = sequelize.define(
 
     status: {
       type: DataTypes.STRING,
-      defaultValue: "pending",
+      defaultValue: 'pending',
       allowNull: false,
     },
 
@@ -44,7 +44,7 @@ const Order = sequelize.define(
       allowNull: true,
       references: {
         model: User,
-        key: "id",
+        key: 'id',
       },
     },
 
@@ -53,7 +53,7 @@ const Order = sequelize.define(
       allowNull: false,
       references: {
         model: User,
-        key: "id",
+        key: 'id',
       },
     },
 
@@ -61,14 +61,14 @@ const Order = sequelize.define(
       type: DataTypes.INTEGER,
       references: {
         model: Coupon,
-        key: "id",
+        key: 'id',
       },
     },
   },
   {
     paranoid: true,
-    tableName: "orders",
-  }
+    tableName: 'orders',
+  },
 );
-  
+
 module.exports = Order;

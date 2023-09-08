@@ -1,7 +1,7 @@
-const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
-const Category = require("../models/mysql/Category");
-const Product = require("../models/mysql/Product");
-const { ErrorResponse } = require("../response/ErrorResponse");
+const { asyncMiddleware } = require('../middlewares/asyncMiddleware');
+const Category = require('../models/mysql/Category');
+const Product = require('../models/mysql/Product');
+const { ErrorResponse } = require('../response/ErrorResponse');
 
 const createProduct = asyncMiddleware(async (req, res, next) => {
   const { name, description, price, amount, categoryId } = req.body;
@@ -11,7 +11,7 @@ const createProduct = asyncMiddleware(async (req, res, next) => {
 
   const FILE_LIMIT = 5 * 1024 * 1024;
   if (size && size > FILE_LIMIT) {
-    throw new ErrorResponse(400, "File too large");
+    throw new ErrorResponse(400, 'File too large');
   }
   await Product.create({
     name,
@@ -49,7 +49,7 @@ const deleteProduct = asyncMiddleware(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Delete category successfully",
+    message: 'Delete category successfully',
   });
 });
 
@@ -70,12 +70,12 @@ const updateProduct = asyncMiddleware(async (req, res, next) => {
       where: {
         id,
       },
-    }
+    },
   );
 
   res.status(200).json({
     success: true,
-    message: "Update category successfully",
+    message: 'Update category successfully',
   });
 });
 

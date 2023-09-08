@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../database/mysql/connect");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../database/mysql/connect');
 
 const Category = sequelize.define(
-  "Category",
+  'Category',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -21,8 +21,8 @@ const Category = sequelize.define(
     },
   },
   {
-    tableName: "categories",
-  }
+    tableName: 'categories',
+  },
 );
 
 module.exports = Category;

@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,7 +10,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable("coupons", {
+    await queryInterface.createTable('coupons', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -34,9 +34,9 @@ module.exports = {
       },
 
       type: {
-        type: DataTypes.ENUM("percent", "money"),
+        type: DataTypes.ENUM('percent', 'money'),
         allowNull: false,
-        defaultValue: "percent",
+        defaultValue: 'percent',
       },
 
       start_date: {
@@ -51,13 +51,13 @@ module.exports = {
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal(
-          "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
         ),
       },
       deletedAt: {
@@ -74,6 +74,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("coupons");
+    await queryInterface.dropTable('coupons');
   },
 };

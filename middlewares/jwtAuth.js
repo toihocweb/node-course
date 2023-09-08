@@ -1,21 +1,21 @@
-const jwt = require("jsonwebtoken");
-const { env } = require("../config/env");
+const jwt = require('jsonwebtoken');
+const { env } = require('../config/env');
 
 const jwtAuth = (req, res, next) => {
   const headerToken = req.headers.authorization;
 
-  if (!headerToken || !headerToken.startsWith("Bearer ")) {
+  if (!headerToken || !headerToken.startsWith('Bearer ')) {
     return res.status(401).json({
       success: false,
-      message: "Unauthorized",
+      message: 'Unauthorized',
     });
   }
 
-  const token = headerToken.split(" ")[1];
+  const token = headerToken.split(' ')[1];
   if (!token) {
     return res.status(401).json({
       success: false,
-      message: "Unauthorized",
+      message: 'Unauthorized',
     });
   }
 
@@ -25,11 +25,10 @@ const jwtAuth = (req, res, next) => {
     next();
   } catch (error) {
     return res.status(401).json({
-        success: false,
-        message: "Unauthorized",
-      });
+      success: false,
+      message: 'Unauthorized',
+    });
   }
-  
 };
 
 module.exports = jwtAuth;

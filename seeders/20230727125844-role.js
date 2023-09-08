@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const { roles } = require("../constant/roles");
+const { roles } = require('../constant/roles');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -13,7 +13,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("roles", roles);
+    await queryInterface.bulkInsert('roles', roles);
   },
 
   async down(queryInterface, Sequelize) {
@@ -23,6 +23,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete("roles", null, {});
+    await queryInterface.bulkDelete('roles', null, {});
   },
 };

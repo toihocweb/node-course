@@ -1,5 +1,5 @@
-const Role = require("../models/mysql/Role");
-const User = require("../models/mysql/User");
+const Role = require('../models/mysql/Role');
+const User = require('../models/mysql/User');
 
 exports.authorize =
   (...roles) =>
@@ -12,7 +12,7 @@ exports.authorize =
         if (!user || !roles.includes(user.role)) {
           return res.status(403).json({
             success: false,
-            message: "No Permission",
+            message: 'No Permission',
           });
         }
         req.user.role = user.role;
@@ -21,7 +21,7 @@ exports.authorize =
       .catch(() => {
         return res.status(403).json({
           success: false,
-          message: "No Permission",
+          message: 'No Permission',
         });
       });
   };

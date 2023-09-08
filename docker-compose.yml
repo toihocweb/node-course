@@ -10,14 +10,14 @@ services:
       MYSQL_USER: test
       MYSQL_PASSWORD: 123456
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - /var/lib/mysql_data:/var/lib/mysql
   mongodb:
     image: mongo:latest
     container_name: shop-mongodb
     ports:
-      - "27017:27017"
+      - '27017:27017'
     command: [--auth]
     volumes:
       - /var/lib/mongodb_data:/data/db
@@ -25,7 +25,7 @@ services:
     build: .
     container_name: shop-backend
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - mysql
       - mongodb

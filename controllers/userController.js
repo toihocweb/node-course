@@ -1,12 +1,12 @@
-const { asyncMiddleware } = require("../middlewares/asyncMiddleware");
-const Address = require("../models/mysql/Address");
-const User = require("../models/mysql/User");
-const { ErrorResponse } = require("../response/ErrorResponse");
-const bcrypt = require("bcryptjs");
-const { hashPassword } = require("../utils/hashPassword");
-const { randomBytes } = require("../utils/randomBytes");
-const ForgotToken = require("../models/mongo/ForgotToken");
-const mail = require("../services/mail");
+const { asyncMiddleware } = require('../middlewares/asyncMiddleware');
+const Address = require('../models/mysql/Address');
+const User = require('../models/mysql/User');
+const { ErrorResponse } = require('../response/ErrorResponse');
+const bcrypt = require('bcryptjs');
+const { hashPassword } = require('../utils/hashPassword');
+const { randomBytes } = require('../utils/randomBytes');
+const ForgotToken = require('../models/mongo/ForgotToken');
+const mail = require('../services/mail');
 
 const updateAddress = asyncMiddleware(async (req, res, next) => {
   const { city, address, province, zip } = req.body;
@@ -19,7 +19,7 @@ const updateAddress = asyncMiddleware(async (req, res, next) => {
   });
 
   if (!user) {
-    throw new ErrorResponse(404, "User not found");
+    throw new ErrorResponse(404, 'User not found');
   }
 
   await Address.update(
@@ -33,12 +33,12 @@ const updateAddress = asyncMiddleware(async (req, res, next) => {
       where: {
         userId,
       },
-    }
+    },
   );
 
   res.status(200).json({
     success: true,
-    message: "Update address successfully",
+    message: 'Update address successfully',
   });
 });
 
@@ -47,13 +47,13 @@ const getMe = asyncMiddleware(async (req, res, next) => {
 
   const user = await User.findByPk(userId, {
     attributes: {
-      exclude: ["password", "email"],
+      exclude: ['password', 'email'],
     },
 
     include: {
       model: Address,
       attributes: {
-        exclude: ["city"],
+        exclude: ['city'],
       },
     },
   });
@@ -71,13 +71,13 @@ const changePassword = asyncMiddleware(async (req, res, next) => {
   const user = await User.findByPk(userId);
 
   if (!user) {
-    throw new ErrorResponse(404, "User not found");
+    throw new ErrorResponse(404, 'User not found');
   }
 
   const isMatch = bcrypt.compareSync(oldPassword, user.password);
 
   if (!isMatch) {
-    throw new ErrorResponse(400, "Invalid password");
+    throw new ErrorResponse(400, 'Invalid password');
   }
 
   const hashedPassword = hashPassword(newPassword);
@@ -88,7 +88,7 @@ const changePassword = asyncMiddleware(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Change password successfully",
+    message: 'Change password successfully',
   });
 });
 
@@ -100,7 +100,7 @@ const forgotPassword = asyncMiddleware(async (req, res, next) => {
   });
 
   if (existToken) {
-    throw new ErrorResponse(400, "Please check your email to reset password");
+    throw new ErrorResponse(400, 'Please check your email to reset password');
   }
 
   const user = await User.findOne({
@@ -110,7 +110,7 @@ const forgotPassword = asyncMiddleware(async (req, res, next) => {
   });
 
   if (!user) {
-    throw new ErrorResponse(404, "User not found");
+    throw new ErrorResponse(404, 'User not found');
   }
 
   // generate forgot password token
@@ -127,7 +127,7 @@ const forgotPassword = asyncMiddleware(async (req, res, next) => {
 
   const sendMail = mail.sendMail({
     to: email,
-    subject: "Reset password",
+    subject: 'Reset password',
     html: `<h1>Click <a href="${link}">here</a> to reset password</h1>`,
   });
 
@@ -135,7 +135,7 @@ const forgotPassword = asyncMiddleware(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Please check your email to reset password",
+    message: 'Please check your email to reset password',
   });
 });
 
@@ -147,7 +147,7 @@ const verifyForgotToken = asyncMiddleware(async (req, res, next) => {
   });
 
   if (!tokenDoc) {
-    throw new ErrorResponse(400, "Invalid Token");
+    throw new ErrorResponse(400, 'Invalid Token');
   }
 
   res.status(200).json({
@@ -165,7 +165,7 @@ const resetPassword = asyncMiddleware(async (req, res, next) => {
   });
 
   if (!tokenDoc) {
-    throw new ErrorResponse(400, "Invalid Token");
+    throw new ErrorResponse(400, 'Invalid Token');
   }
 
   const hashedPassword = hashPassword(newPassword);
@@ -183,13 +183,13 @@ const resetPassword = asyncMiddleware(async (req, res, next) => {
         where: {
           email,
         },
-      }
+      },
     ),
   ]);
 
   res.status(200).json({
     success: true,
-    message: "Reset password successfully",
+    message: 'Reset password successfully',
   });
 });
 

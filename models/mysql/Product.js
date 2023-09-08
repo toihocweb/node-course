@@ -1,9 +1,9 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../database/mysql/connect");
-const Category = require("./Category");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../database/mysql/connect');
+const Category = require('./Category');
 
 const Product = sequelize.define(
-  "Product",
+  'Product',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -41,13 +41,13 @@ const Product = sequelize.define(
       allowNull: false,
       references: {
         model: Category,
-        key: "id",
+        key: 'id',
       },
     },
   },
   {
-    tableName: "products",
-  }
+    tableName: 'products',
+  },
 );
 
 module.exports = Product;
